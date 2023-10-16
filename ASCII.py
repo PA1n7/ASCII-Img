@@ -1,15 +1,7 @@
-import pygame, os
+import pygame, os, json
 from pixelize import pixel
 
-color_equivalence = {
-    230: "█",
-    200: "▓",
-    170: "@",
-    150: "▒",
-    100: "#",
-    50: "░",
-    0: "+"
-}
+color_equivalence = json.loads(open("color_equivalence.json", "r", encoding="UTF-8").read())
 
 def convert_to_ascii(source:pygame.Surface, out_file:str):
     out = ""
@@ -19,7 +11,7 @@ def convert_to_ascii(source:pygame.Surface, out_file:str):
         for x in range(size[0]):
             color=source.get_at((x, y))[0]
             for k, v in color_equivalence.items():
-                if color>k:
+                if color>int(k):
                     out+=v*stretch
                     break
         out+="\n"
