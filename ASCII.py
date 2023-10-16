@@ -14,12 +14,13 @@ color_equivalence = {
 def convert_to_ascii(source:pygame.Surface, out_file:str):
     out = ""
     size = source.get_size()
+    stretch = 2
     for y in range(size[1]):
         for x in range(size[0]):
             color=source.get_at((x, y))[0]
             for k, v in color_equivalence.items():
                 if color>k:
-                    out+=v
+                    out+=v*stretch
                     break
         out+="\n"
     print(out)
@@ -33,10 +34,12 @@ def desaturate(source:pygame.Surface, dest:pygame.Surface):
             avg = sum(color)/len(color)
             pygame.draw.rect(dest, (avg, avg, avg), pygame.Rect(x, y, 1, 1))
 
-def ascii(img_file:str, out_file:str, size:int):
+def ascii(img_file:str, out_file:str, size:int, debug=False):
     pixel(img_file, "temp.png", size)
     pixelized = pygame.image.load("temp.png")
-    pixelized = pygame.transform.scale(pixelized, (size, size))
+    size = (size, int((pixelized.get_size()[1]*size)/pixelized.get_size()[0]))
+    pixelized = pygame.transform.scale(pixelized, size)
     desaturate(pixelized, pixelized)
+    if debug: pygame.image.save(pixelized, "desat.png")
     convert_to_ascii(pixelized, out_file)
-    os.remove("temp.png")
+    if not debug: os.remove("temp.png")
