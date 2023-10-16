@@ -10,7 +10,7 @@ def percentage(screen:pygame.Surface):
                 count+=1
     return count/total
 
-def test(space=True, values_tested = ["S", "#", "$", "=", "-", "+", "8", "@", " ", ";", ".", ",", "░", "▒", "▓", "█", "▄", "▌", "■", "╔", "╬"]):
+def test(space=True, values_tested = ["S", "#", "$", "=", "-", "+", "8", "@", " ", ";", ".", ",", "░", "▒", "▓", "█", "▄", "▌", "■", "╔", "╬", "\"", "'"]):
     tester = pygame.Surface((500, 500))
     percentage_equivalence = []
     pygame.font.init()
